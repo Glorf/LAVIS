@@ -28,7 +28,7 @@ setup(
     keywords="Vision-Language, Deep Learning, Library",
     license="3-Clause BSD",
     packages=find_namespace_packages(include="lavis.*"),
-    install_requires=fetch_requirements("requirements-dev.txt"),
+    install_requires=fetch_requirements("requirements.txt"),
     python_requires=">=3.7.0",
     include_package_data=True,
     dependency_links=DEPENDENCY_LINKS,

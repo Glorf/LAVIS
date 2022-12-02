@@ -12,22 +12,25 @@ import random as rnd
 import tarfile
 import zipfile
 
-import decord
 import webdataset as wds
 import numpy as np
 import torch
 from torch.utils.data.dataset import IterableDataset, ChainDataset
-from decord import VideoReader
 from lavis.common.registry import registry
 from lavis.datasets.datasets.base_dataset import ConcatDataset
 from tqdm import tqdm
 
-decord.bridge.set_bridge("torch")
 MAX_INT = registry.get("MAX_INT")
 
 
 def load_video(video_path, n_frms=MAX_INT, height=-1, width=-1, sampling="uniform"):
-    vr = VideoReader(uri=video_path, height=height, width=width)
+    try:
+        import decord
+    except ImportError:
+        raise ImportError("Install decord to process videos")
+
+    decord.bridge.set_bridge("torch")
+    vr = decord.VideoReader(uri=video_path, height=height, width=width)
 
     vlen = len(vr)
     start, end = 0, vlen
